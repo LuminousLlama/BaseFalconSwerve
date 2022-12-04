@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
@@ -35,6 +36,8 @@ public class TeleopSwerve extends CommandBase {
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
+        //probably more readable if we multiply by max speed before passing it as a parameter 
+
         /* Drive */
         s_Swerve.drive(
             new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
@@ -42,5 +45,14 @@ public class TeleopSwerve extends CommandBase {
             !robotCentricSup.getAsBoolean(), 
             true
         );
+
+
+        SmartDashboard.putNumber("Raw input translation X", translationSup.getAsDouble());
+        SmartDashboard.putNumber("Raw input strafe Y", strafeSup.getAsDouble());
+        SmartDashboard.putNumber("Raw input rotation", rotationSup.getAsDouble());
+
+        SmartDashboard.putNumber("TranslationVal", translationVal);
+        SmartDashboard.putNumber("TranslationVal", strafeVal);
+        SmartDashboard.putNumber("TranslationVal", rotationVal);
     }
 }
